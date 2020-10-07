@@ -4,7 +4,7 @@ Public Class CrearEmpleado
     Dim nombre As String
     Dim correo As String
     Dim contrasenia As String
-    Dim empleado_nuevo As Personal
+    Dim empleado_nuevo As PersonalView
     Dim sucursales As List(Of Sucursal)
 
     Dim query As Query
@@ -13,13 +13,16 @@ Public Class CrearEmpleado
         correo = correoTxt.Text
         contrasenia = contraseniaTxt.Text
         If Not nombre.Equals("") And Not correo.Equals("") And Not contrasenia.Equals("") Then
-            empleado_nuevo = New Personal()
+            empleado_nuevo = New PersonalView()
             empleado_nuevo.NombrePersonal = nombre
             empleado_nuevo.Correo = correo
             empleado_nuevo.Contrasenia = contrasenia
             If cbRol.SelectedItem.ToString = "Empleado" Then
                 empleado_nuevo.Tipo = "Empleado"
-                empleado_nuevo.Sucursal = getSucursal(sucursalCb.SelectedItem.ToString)
+                Dim curre_sucursal As Sucursal = getSucursal(sucursalCb.SelectedItem.ToString)
+                empleado_nuevo.IdSucursal = curre_sucursal.IdSucursal
+                empleado_nuevo.Codigo = curre_sucursal.Codigo
+                empleado_nuevo.Direccion = curre_sucursal.Direccion
             Else
                 empleado_nuevo.Tipo = "Administrador"
             End If
@@ -35,7 +38,7 @@ Public Class CrearEmpleado
                                    MessageBoxIcon.Warning)
                 End If
             Else
-                empleado_nuevo.Sucursal = DashboardAdministrador.currentEmpleado.Sucursal
+                empleado_nuevo.IdSucursal = DashboardAdministrador.currentEmpleado.IdSucursal
                 empleado_nuevo.IdPersonal = DashboardAdministrador.currentEmpleado.IdPersonal
                 If query.execUpdateEmpleado(empleado_nuevo) Then
                     MessageBox.Show("Se edito correctamente", "Registro exitoso", MessageBoxButtons.OK,
@@ -71,8 +74,8 @@ Public Class CrearEmpleado
             correoTxt.Text = DashboardAdministrador.currentEmpleado.Correo
             contraseniaTxt.Text = DashboardAdministrador.currentEmpleado.Contrasenia
             cbRol.SelectedItem = DashboardAdministrador.currentEmpleado.Tipo
-            If DashboardAdministrador.currentEmpleado.Sucursal IsNot Nothing Then
-                sucursalCb.SelectedItem = DashboardAdministrador.currentEmpleado.Sucursal.Codigo
+            If DashboardAdministrador.currentEmpleado.NombrePersonal IsNot Nothing Then
+                sucursalCb.SelectedItem = DashboardAdministrador.currentEmpleado.Codigo
             Else
                 sucursalCb.Enabled = False
             End If

@@ -1,19 +1,23 @@
-﻿Public Class Personal
+﻿Public Class PersonalView
 
     Private m_idPersonal As Integer
     Private m_nombrePersonal As String
     Private m_correo As String
     Private m_contrasenia As String
     Private m_tipo As String
-    Private m_sucursal As Sucursal
+    Private m_idSucursal As Integer
+    Private m_codigo As String
+    Private m_direccion As String
 
-    Public Sub New(idPersonal As Integer, nombrePersonal As String, correo As String, contrasenia As String, tipo As String, sucursal As Sucursal)
+    Public Sub New(idPersonal As Integer, nombrePersonal As String, correo As String, contrasenia As String, tipo As String, idSucursal As Integer, codigo As String, direccion As String)
         m_idPersonal = idPersonal
         m_nombrePersonal = nombrePersonal
         m_correo = correo
         m_contrasenia = contrasenia
         m_tipo = tipo
-        m_sucursal = sucursal
+        m_idSucursal = idSucursal
+        m_codigo = codigo
+        m_direccion = direccion
     End Sub
 
     Public Sub New()
@@ -64,12 +68,30 @@
         End Set
     End Property
 
-    Public Property Sucursal As Sucursal
+    Public Property IdSucursal As Integer
         Get
-            Return m_sucursal
+            Return m_idSucursal
         End Get
-        Set(value As Sucursal)
-            m_sucursal = value
+        Set(value As Integer)
+            m_idSucursal = value
+        End Set
+    End Property
+
+    Public Property Codigo As String
+        Get
+            Return m_codigo
+        End Get
+        Set(value As String)
+            m_codigo = value
+        End Set
+    End Property
+
+    Public Property Direccion As String
+        Get
+            Return m_direccion
+        End Get
+        Set(value As String)
+            m_direccion = value
         End Set
     End Property
 End Class

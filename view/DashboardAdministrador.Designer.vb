@@ -22,6 +22,8 @@ Partial Class DashboardAdministrador
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Me.dashboradTb = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.dgvDatos = New System.Windows.Forms.DataGridView()
@@ -37,20 +39,31 @@ Partial Class DashboardAdministrador
         Me.lblNombre = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.reportCb = New System.Windows.Forms.ComboBox()
+        Me.datosDv = New System.Windows.Forms.DataGridView()
+        Me.reportChart = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.lblSucursal = New System.Windows.Forms.Label()
+        Me.cbSucursal = New System.Windows.Forms.ComboBox()
         Me.dashboradTb.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         CType(Me.dgvDatos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        CType(Me.datosDv, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.reportChart, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dashboradTb
         '
         Me.dashboradTb.Controls.Add(Me.TabPage1)
         Me.dashboradTb.Controls.Add(Me.TabPage2)
-        Me.dashboradTb.Location = New System.Drawing.Point(20, 18)
+        Me.dashboradTb.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dashboradTb.Location = New System.Drawing.Point(0, 0)
         Me.dashboradTb.Name = "dashboradTb"
         Me.dashboradTb.SelectedIndex = 0
-        Me.dashboradTb.Size = New System.Drawing.Size(808, 465)
+        Me.dashboradTb.Size = New System.Drawing.Size(849, 500)
+        Me.dashboradTb.SizeMode = System.Windows.Forms.TabSizeMode.Fixed
         Me.dashboradTb.TabIndex = 1
         '
         'TabPage1
@@ -187,13 +200,78 @@ Partial Class DashboardAdministrador
         '
         'TabPage2
         '
+        Me.TabPage2.Controls.Add(Me.cbSucursal)
+        Me.TabPage2.Controls.Add(Me.lblSucursal)
+        Me.TabPage2.Controls.Add(Me.reportChart)
+        Me.TabPage2.Controls.Add(Me.datosDv)
+        Me.TabPage2.Controls.Add(Me.reportCb)
+        Me.TabPage2.Controls.Add(Me.Label3)
         Me.TabPage2.Location = New System.Drawing.Point(4, 25)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(800, 436)
+        Me.TabPage2.Size = New System.Drawing.Size(841, 471)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(16, 22)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(106, 17)
+        Me.Label3.TabIndex = 0
+        Me.Label3.Text = "Tipo de reporte"
+        '
+        'reportCb
+        '
+        Me.reportCb.FormattingEnabled = True
+        Me.reportCb.Items.AddRange(New Object() {"Ordenes hechas", "Ventas por sucursal", "Ventas por empleado", "Top 3 sucursales donde se vendio mas pizza", "Top 3 sucursales donde se vendieron mas bebidas"})
+        Me.reportCb.Location = New System.Drawing.Point(128, 22)
+        Me.reportCb.Name = "reportCb"
+        Me.reportCb.Size = New System.Drawing.Size(368, 24)
+        Me.reportCb.TabIndex = 1
+        '
+        'datosDv
+        '
+        Me.datosDv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.datosDv.Location = New System.Drawing.Point(19, 100)
+        Me.datosDv.Name = "datosDv"
+        Me.datosDv.RowHeadersWidth = 51
+        Me.datosDv.RowTemplate.Height = 24
+        Me.datosDv.Size = New System.Drawing.Size(329, 350)
+        Me.datosDv.TabIndex = 2
+        '
+        'reportChart
+        '
+        ChartArea4.Name = "ChartArea1"
+        Me.reportChart.ChartAreas.Add(ChartArea4)
+        Legend4.Name = "Legend1"
+        Me.reportChart.Legends.Add(Legend4)
+        Me.reportChart.Location = New System.Drawing.Point(372, 100)
+        Me.reportChart.Name = "reportChart"
+        Me.reportChart.Size = New System.Drawing.Size(461, 350)
+        Me.reportChart.TabIndex = 3
+        Me.reportChart.Text = "Chart1"
+        '
+        'lblSucursal
+        '
+        Me.lblSucursal.AutoSize = True
+        Me.lblSucursal.Location = New System.Drawing.Point(16, 62)
+        Me.lblSucursal.Name = "lblSucursal"
+        Me.lblSucursal.Size = New System.Drawing.Size(63, 17)
+        Me.lblSucursal.TabIndex = 4
+        Me.lblSucursal.Text = "Surcusal"
+        Me.lblSucursal.Visible = False
+        '
+        'cbSucursal
+        '
+        Me.cbSucursal.FormattingEnabled = True
+        Me.cbSucursal.Location = New System.Drawing.Point(128, 62)
+        Me.cbSucursal.Name = "cbSucursal"
+        Me.cbSucursal.Size = New System.Drawing.Size(220, 24)
+        Me.cbSucursal.TabIndex = 5
+        Me.cbSucursal.Visible = False
         '
         'DashboardAdministrador
         '
@@ -210,6 +288,10 @@ Partial Class DashboardAdministrador
         CType(Me.dgvDatos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        Me.TabPage2.PerformLayout()
+        CType(Me.datosDv, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.reportChart, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -229,4 +311,10 @@ Partial Class DashboardAdministrador
     Friend WithEvents lblNombre As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents reportChart As DataVisualization.Charting.Chart
+    Friend WithEvents datosDv As DataGridView
+    Friend WithEvents reportCb As ComboBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents cbSucursal As ComboBox
+    Friend WithEvents lblSucursal As Label
 End Class

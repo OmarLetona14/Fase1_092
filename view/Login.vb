@@ -1,6 +1,6 @@
 ﻿Imports System.Data.SqlClient
-Imports PIZZA_HIT.Connector
-Imports PIZZA_HIT.Query
+Imports PIZZA_HIT_201701012.Connector
+Imports PIZZA_HIT_201701012.Query
 Public Class Login
     Dim user As String
     Dim pass As String

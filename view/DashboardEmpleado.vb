@@ -1,5 +1,5 @@
-﻿Imports PIZZA_HIT.Query
-Imports PIZZA_HIT.NuevoPedidoProcess
+﻿Imports PIZZA_HIT_201701012.Query
+Imports PIZZA_HIT_201701012.NuevoPedidoProcess
 Public Class DashboardEmpleado
     Dim total As Double
     Dim products As List(Of Producto)
@@ -137,6 +137,7 @@ Public Class DashboardEmpleado
     End Sub
 
     Private Sub simulacionBtn_Click(sender As Object, e As EventArgs) Handles simulacionBtn.Click
+
         Dim c = Integer.Parse(cantidadSTxt.Text)
         If (c > 0) Then
             simulacion = New SimulacionProcess()
@@ -156,10 +157,16 @@ Public Class DashboardEmpleado
         If generateOrder() Then
             MessageBox.Show("Orden completada con exito", "Orden completada", MessageBoxButtons.OK,
                                 MessageBoxIcon.Information)
+            clearFields()
         Else
             MessageBox.Show("Ocurrio un error al generar la orden", "Error de Orden", MessageBoxButtons.OK,
                                 MessageBoxIcon.Error)
         End If
+    End Sub
+
+    Private Sub clearFields()
+        simulacionLv.Items.Clear()
+        cantidadSTxt.Text = ""
     End Sub
 
     Private Function generateOrder()

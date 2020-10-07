@@ -1,20 +1,27 @@
 ﻿Imports PIZZA_HIT_201701012.Query
 Public Class DashboardAdministrador
 
-    Dim empleados As List(Of Personal)
+    Dim empleados As List(Of PersonalView)
     Dim productos As List(Of Producto)
     Dim sucursales As List(Of Sucursal)
-    Public Shared currentEmpleado As Personal
+    Dim admin_sucursal As List(Of Sucursal)
+    Public Shared currentEmpleado As PersonalView
     Public Shared currentProducto As Producto
     Public Shared currentSucursal As Sucursal
     Dim query As Query
     Public Shared edit As Boolean = False
-
     Private Sub initComponents()
+        query = New Query()
         dashboradTb.TabPages.Item(0).Text = "Administrar"
         dashboradTb.TabPages.Item(1).Text = "Reportes"
         lblCorreo.Text = LoginProcess.currentUser.Correo
         lblNombre.Text = LoginProcess.currentUser.NombrePersonal
+        admin_sucursal = query.execGetSucursales()
+        For Each s As Sucursal In admin_sucursal
+            If s IsNot Nothing Then
+                cbSucursal.Items.Add(s.Codigo)
+            End If
+        Next
     End Sub
 
     Private Sub cerrarSesionBtn_Click(sender As Object, e As EventArgs) Handles cerrarSesionBtn.Click
@@ -32,7 +39,7 @@ Public Class DashboardAdministrador
         query = New Query()
         Select Case opcion
             Case "Empleados"
-                empleados = New List(Of Personal)
+                empleados = New List(Of PersonalView)
                 empleados = query.execGetEmpleados()
                 dgvDatos.DataSource = empleados
             Case "Sucursales"
@@ -68,7 +75,7 @@ Public Class DashboardAdministrador
     End Sub
 
     Private Function getSelectedEmpleado(idEmpleado As Integer)
-        For Each e As Personal In empleados
+        For Each e As PersonalView In empleados
             If e IsNot Nothing Then
                 If e.IdPersonal = idEmpleado Then
                     Return e
@@ -204,4 +211,67 @@ Public Class DashboardAdministrador
     Private Sub DashboardAdministrador_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         initComponents()
     End Sub
+
+    Private Sub reportCb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles reportCb.SelectedIndexChanged
+        lblSucursal.Visible = False
+        cbSucursal.Visible = False
+        clearFields()
+        query = New Query()
+        Select Case reportCb.SelectedItem.ToString
+            Case "Ordenes hechas"
+                Dim ventas As List(Of VentaView) = query.execGetVentas()
+                datosDv.DataSource = ventas
+                reportChart.Series.Add("Ventas")
+                For Each v As VentaView In ventas
+                    reportChart.Series("Ventas").Points.AddXY(v.IdVenta, v.Total)
+                Next
+            Case "Ventas por sucursal"
+                Dim ventas_sucursalas As List(Of VentasSucursal) = query.execGetVentasSucursal()
+                datosDv.DataSource = ventas_sucursalas
+                reportChart.Series.Add("Ventas por sucursal")
+                For Each v As VentasSucursal In ventas_sucursalas
+                    reportChart.Series("Ventas por sucursal").Points.AddXY(v.Codigo, v.Total)
+                Next
+            Case "Ventas por empleado"
+                lblSucursal.Visible = True
+                cbSucursal.Visible = True
+
+            Case ""
+
+        End Select
+
+
+    End Sub
+
+    Private Sub clearFields()
+        reportChart.Series.Clear()
+        datosDv.DataSource = ""
+    End Sub
+
+    Private Sub TabPage2_Click(sender As Object, e As EventArgs) Handles TabPage2.Click
+
+    End Sub
+
+    Private Sub cbSucursal_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbSucursal.SelectedIndexChanged
+        clearFields()
+        query = New Query()
+        Dim suc As Integer = getSucursal()
+        Dim ventas As List(Of VentaEmpleado) = query.execGetVentasEmpleado(suc)
+        datosDv.DataSource = ventas
+        reportChart.Series.Add("Ventas por empleado")
+        For Each v As VentaEmpleado In ventas
+            reportChart.Series("Ventas por empleado").Points.AddXY(v.NombrePersonal, v.Total)
+        Next
+    End Sub
+
+    Private Function getSucursal()
+        For Each s As Sucursal In admin_sucursal
+            If s IsNot Nothing Then
+                If s.Codigo.Equals(cbSucursal.SelectedItem.ToString) Then
+                    Return s.IdSucursal
+                End If
+            End If
+        Next
+        Return Nothing
+    End Function
 End Class
