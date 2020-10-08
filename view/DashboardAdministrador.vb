@@ -155,16 +155,21 @@ Public Class DashboardAdministrador
         Dim result = MessageBox.Show("Esta seguro de eliminar este personal?", "Eliminar", MessageBoxButtons.YesNo,
                                    MessageBoxIcon.Question)
         If result = vbYes Then
-            currentEmpleado = getSelectedEmpleado(Integer.Parse(dgvDatos.SelectedRows(0).Cells(0).FormattedValue.ToString))
-            If query.execDeletePersonal(currentEmpleado) Then
-                MessageBox.Show("Personal eliminado correctamente", "Eliminado correctamente", MessageBoxButtons.OK,
-                                       MessageBoxIcon.Information)
-                updateWindow()
-                Return True
+            If Not dgvDatos.SelectedRows.Count < 1 Then
+                currentEmpleado = getSelectedEmpleado(Integer.Parse(dgvDatos.SelectedRows(0).Cells(0).FormattedValue.ToString))
+                If query.execDeletePersonal(currentEmpleado) Then
+                    MessageBox.Show("Personal eliminado correctamente", "Eliminado correctamente", MessageBoxButtons.OK,
+                                           MessageBoxIcon.Information)
+                    updateWindow()
+                    Return True
+                Else
+                    MessageBox.Show("Ocurrio un error al eliminar el personal", "Error", MessageBoxButtons.OK,
+                                           MessageBoxIcon.Error)
+                    Return False
+                End If
             Else
-                MessageBox.Show("Ocurrio un error al eliminar el personal", "Error", MessageBoxButtons.OK,
-                                       MessageBoxIcon.Error)
-                Return False
+                MessageBox.Show("Debe seleccionar una fila", "Error", MessageBoxButtons.OK,
+                                   MessageBoxIcon.Warning)
             End If
         End If
         Return False
@@ -174,16 +179,21 @@ Public Class DashboardAdministrador
         Dim result = MessageBox.Show("Esta seguro de eliminar este producto?", "Eliminar", MessageBoxButtons.YesNo,
                                    MessageBoxIcon.Question)
         If result = vbYes Then
-            currentProducto = getSelectedProducto(Integer.Parse(dgvDatos.SelectedRows(0).Cells(0).FormattedValue.ToString))
-            If query.execDeleteProducto(currentProducto) Then
-                MessageBox.Show("Producto eliminado correctamente", "Eliminado correctamente", MessageBoxButtons.OK,
-                                       MessageBoxIcon.Information)
-                updateWindow()
-                Return True
+            If Not dgvDatos.SelectedRows.Count < 1 Then
+                currentProducto = getSelectedProducto(Integer.Parse(dgvDatos.SelectedRows(0).Cells(0).FormattedValue.ToString))
+                If query.execDeleteProducto(currentProducto) Then
+                    MessageBox.Show("Producto eliminado correctamente", "Eliminado correctamente", MessageBoxButtons.OK,
+                                           MessageBoxIcon.Information)
+                    updateWindow()
+                    Return True
+                Else
+                    MessageBox.Show("Ocurrio un error al eliminar el producto", "Error", MessageBoxButtons.OK,
+                                           MessageBoxIcon.Error)
+                    Return False
+                End If
             Else
-                MessageBox.Show("Ocurrio un error al eliminar el producto", "Error", MessageBoxButtons.OK,
-                                       MessageBoxIcon.Error)
-                Return False
+                MessageBox.Show("Debe seleccionar una fila", "Error", MessageBoxButtons.OK,
+                                   MessageBoxIcon.Warning)
             End If
         End If
         Return False
@@ -193,16 +203,21 @@ Public Class DashboardAdministrador
         Dim result = MessageBox.Show("Esta seguro de eliminar esta sucursal?", "Eliminar", MessageBoxButtons.YesNo,
                                    MessageBoxIcon.Question)
         If result = vbYes Then
-            currentSucursal = getSelectedSucursal(Integer.Parse(dgvDatos.SelectedRows(0).Cells(0).FormattedValue.ToString))
-            If query.execDeleteSucursal(currentSucursal) Then
-                MessageBox.Show("Sucursal eliminada correctamente", "Eliminado correctamente", MessageBoxButtons.OK,
-                                       MessageBoxIcon.Information)
-                updateWindow()
-                Return True
+            If Not dgvDatos.SelectedRows.Count < 1 Then
+                currentSucursal = getSelectedSucursal(Integer.Parse(dgvDatos.SelectedRows(0).Cells(0).FormattedValue.ToString))
+                If query.execDeleteSucursal(currentSucursal) Then
+                    MessageBox.Show("Sucursal eliminada correctamente", "Eliminado correctamente", MessageBoxButtons.OK,
+                                           MessageBoxIcon.Information)
+                    updateWindow()
+                    Return True
+                Else
+                    MessageBox.Show("Ocurrio un error al eliminar la sucursal", "Error", MessageBoxButtons.OK,
+                                           MessageBoxIcon.Error)
+                    Return False
+                End If
             Else
-                MessageBox.Show("Ocurrio un error al eliminar la sucursal", "Error", MessageBoxButtons.OK,
-                                       MessageBoxIcon.Error)
-                Return False
+                MessageBox.Show("Debe seleccionar una fila", "Error", MessageBoxButtons.OK,
+                                   MessageBoxIcon.Warning)
             End If
         End If
         Return False
