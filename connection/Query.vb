@@ -137,7 +137,8 @@ Public Class Query
         s.codigo, s.direccion
         from venta as v
         inner join personal as p on p.idPersonal = v.idPersonal
-        inner join sucursal as s on s.idSucursal = p.idSucursal;"
+        inner join sucursal as s on s.idSucursal = p.idSucursal
+        order by v.total desc;"
         Dim _comm = New MySqlCommand(query, Connector.connection)
         Try
             Dim reader = _comm.ExecuteReader()
@@ -398,4 +399,55 @@ Public Class Query
         End Try
         Return Nothing
     End Function
+
+    Public Function execGetTop3Pizza()
+        Dim venta As Report4
+        Dim ventas_empleado = New List(Of Report4)
+        Dim query As String = "select s.codigo, sum(v.cantidadPizza) as total_vendido from venta as v 
+        inner join personal as p on p.idPersonal = v.idPersonal
+        inner join sucursal as s on s.idSucursal = p.idSucursal
+        group by s.codigo
+        order by total_vendido desc limit 3;"
+        Dim _comm = New MySqlCommand(query, Connector.connection)
+        Try
+            Dim reader = _comm.ExecuteReader()
+            While (reader.Read())
+                venta = New Report4()
+                venta.Codigo = reader.GetString(0)
+                venta.Total = Math.Round(reader.GetDouble(1))
+                ventas_empleado.Add(venta)
+            End While
+            reader.Close()
+            Return ventas_empleado
+        Catch ex As Exception
+            Return Nothing
+        End Try
+        Return Nothing
+    End Function
+
+    Public Function execGetTop3Bebida()
+        Dim venta As Report4
+        Dim ventas_empleado = New List(Of Report4)
+        Dim query As String = "select s.codigo, sum(v.cantidadBebida) as total_vendido from venta as v 
+        inner join personal as p on p.idPersonal = v.idPersonal
+        inner join sucursal as s on s.idSucursal = p.idSucursal
+        group by s.codigo
+        order by total_vendido desc limit 3;"
+        Dim _comm = New MySqlCommand(query, Connector.connection)
+        Try
+            Dim reader = _comm.ExecuteReader()
+            While (reader.Read())
+                venta = New Report4()
+                venta.Codigo = reader.GetString(0)
+                venta.Total = Math.Round(reader.GetDouble(1))
+                ventas_empleado.Add(venta)
+            End While
+            reader.Close()
+            Return ventas_empleado
+        Catch ex As Exception
+            Return Nothing
+        End Try
+        Return Nothing
+    End Function
+
 End Class

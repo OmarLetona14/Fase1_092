@@ -134,8 +134,8 @@ Public Class DashboardAdministrador
         Else
             MessageBox.Show("Debe seleccionar una fila", "Error", MessageBoxButtons.OK,
                                    MessageBoxIcon.Warning)
-            edit = False
         End If
+        edit = False
     End Sub
 
     Private Sub eliminarBtn_Click(sender As Object, e As EventArgs) Handles eliminarBtn.Click
@@ -250,9 +250,20 @@ Public Class DashboardAdministrador
             Case "Ventas por empleado"
                 lblSucursal.Visible = True
                 cbSucursal.Visible = True
-
-            Case ""
-
+            Case "Top 3 sucursales donde se vendio mas pizza"
+                Dim ventas_top As List(Of Report4) = query.execGetTop3Pizza()
+                datosDv.DataSource = ventas_top
+                reportChart.Series.Add("Top 3 sucursales donde se vendio mas pizza")
+                For Each v As Report4 In ventas_top
+                    reportChart.Series("Top 3 sucursales donde se vendio mas pizza").Points.AddXY(v.Codigo, v.Total)
+                Next
+            Case "Top 3 sucursales donde se vendieron mas bebidas"
+                Dim ventas_top As List(Of Report4) = query.execGetTop3Bebida()
+                datosDv.DataSource = ventas_top
+                reportChart.Series.Add("Top 3 sucursales donde se vendieron mas bebidas")
+                For Each v As Report4 In ventas_top
+                    reportChart.Series("Top 3 sucursales donde se vendieron mas bebidas").Points.AddXY(v.Codigo, v.Total)
+                Next
         End Select
 
 

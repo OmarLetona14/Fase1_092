@@ -95,6 +95,7 @@
     <Compile Include="model\Personal.vb" />
     <Compile Include="model\PersonalView.vb" />
     <Compile Include="model\Producto.vb" />
+    <Compile Include="model\Report4.vb" />
     <Compile Include="model\Sucursal.vb" />
     <Compile Include="model\Venta.vb" />
     <Compile Include="model\VentaEmpleado.vb" />
